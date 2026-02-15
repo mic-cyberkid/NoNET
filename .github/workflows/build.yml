@@ -1,0 +1,12 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup MSVC
+        uses: microsoft/setup-msvc-dev@v2
+      - run: cl.exe /EHsc main.cpp /link ole32.lib oleaut32.lib /out:firewall_tool.exe
