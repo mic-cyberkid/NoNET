@@ -54,7 +54,7 @@ std::error_code Firewall::setDefaultOutboundBlock() {
     HRESULT hr = m_pNetFwPolicy2->get_CurrentProfileTypes(&currentProfileTypes);
     if (FAILED(hr)) return std::make_error_code(std::errc::io_error);
 
-    auto setBlock = [&](long profile) {
+    auto setBlock = [&](NET_FW_PROFILE_TYPE2 profile) {
         if (currentProfileTypes & profile) {
             m_pNetFwPolicy2->put_DefaultOutboundAction(profile, NET_FW_ACTION_BLOCK);
         }
