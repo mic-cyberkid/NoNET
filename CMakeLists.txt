@@ -52,12 +52,15 @@ set(SOURCES
     resources/resources.qrc
 )
 
-# Windows Manifest for UAC elevation
-if(WIN32)
-    set(MANIFEST "${CMAKE_CURRENT_SOURCE_DIR}/resources/app.manifest")
-endif()
+add_executable(FirewallManager ${SOURCES})
 
-add_executable(FirewallManager ${SOURCES} ${MANIFEST})
+# Windows Manifest for UAC elevation
+if(MSVC)
+    set_target_properties(FirewallManager PROPERTIES
+        MSVC_MANIFEST_UAC_LEVEL "requireAdministrator"
+        MSVC_MANIFEST_UAC_UIACCESS "false"
+    )
+endif()
 
 target_link_libraries(FirewallManager PRIVATE
     Qt6::Widgets
